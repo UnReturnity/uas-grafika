@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAS Grafika Komputer - Camera Matrix Simulator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans flex flex-col">
+
+    <header class="border-b border-gray-800 bg-gray-950 p-4 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-xl font-bold tracking-wider text-blue-400 uppercase">Camera Matrix Matrix Configuration Simulator</h1>
+                <p class="text-xs text-gray-400">Course Assignment: Computer Graphics | Soal 2: View & Projection Matrix</p>
+            </div>
+            <div class="flex gap-4 text-xs text-right text-gray-400">
+                <div>
+                    <span class="block font-semibold text-gray-200">Date:</span> June 17, 2026
+                </div>
+                <div>
+                    <span class="block font-semibold text-gray-200">Uplink target:</span> GitHub Pages Live
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        
+        <section class="lg:col-span-5 space-y-6 bg-gray-950 p-5 rounded-xl border border-gray-800 shadow-xl flex flex-col max-h-screen overflow-y-auto">
+            <h2 class="text-md font-bold text-gray-200 tracking-wide uppercase border-b border-gray-800 pb-2">🎛️ Camera System Inputs</h2>
+
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold text-blue-400 uppercase tracking-wider">📹 Posisi Kamera (Eye/Camera Position)</h3>
+                <div class="grid grid-cols-3 gap-2 bg-gray-900 p-2 rounded border border-gray-800">
+                    <div><label class="text-xxs text-gray-500 block text-center">X</label><input type="number" id="camX" value="0" step="0.5" class="w-full bg-gray-800 text-xs text-center rounded p-1 border border-gray-700 text-blue-300 font-mono"></div>
+                    <div><label class="text-xxs text-gray-500 block text-center">Y</label><input type="number" id="camY" value="5" step="0.5" class="w-full bg-gray-800 text-xs text-center rounded p-1 border border-gray-700 text-blue-300 font-mono"></div>
+                    <div><label class="text-xxs text-gray-500 block text-center">Z</label><input type="number" id="camZ" value="10" step="0.5" class="w-full bg-gray-800 text-xs text-center rounded p-1 border border-gray-700 text-blue-300 font-mono"></div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">🎯 Posisi Target (Look-At Center)</h3>
+                <div class="grid grid-cols-3 gap-2 bg-gray-900 p-2 rounded border border-gray-800">
+                    <div><label class="text-xxs text-gray-500 block text-center">X</label><input type="number" id="tarX" value="0" step="0.5" class="w-full bg-gray-800 text-xs text-center rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                    <div><label class="text-xxs text-gray-500 block text-center">Y</label><input type="number" id="tarY" value="0" step="0.5" class="w-full bg-gray-800 text-xs text-center rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                    <div><label class="text-xxs text-gray-500 block text-center">Z</label><input type="number" id="tarZ" value="0" step="0.5" class="w-full bg-gray-800 text-xs text-center rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">📐 Proyeksi Perspektif & Kemiringan</h3>
+                <div class="space-y-3 bg-gray-900 p-3 rounded border border-gray-800">
+                    <div>
+                        <div class="flex justify-between text-xxs mb-0.5"><label>Kemiringan Up-Vector (Derajat)</label><span id="upAngleVal" class="text-emerald-300 font-mono">0°</span></div>
+                        <input type="range" id="upAngle" min="-180" max="180" step="1" value="0" class="w-full h-1 bg-gray-800 rounded appearance-none accent-emerald-500">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xxs mb-0.5"><label>Sudut Pandang (FOV - Degrees)</label><span id="fovVal" class="text-emerald-300 font-mono">45°</span></div>
+                        <input type="range" id="fov" min="10" max="120" step="1" value="45" class="w-full h-1 bg-gray-800 rounded appearance-none accent-emerald-500">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xxs mb-0.5"><label>Aspek Ratio (Aspect Ratio)</label><span id="aspectVal" class="text-emerald-300 font-mono">1.33</span></div>
+                        <input type="range" id="aspect" min="0.5" max="2.5" step="0.05" value="1.33" class="w-full h-1 bg-gray-800 rounded appearance-none accent-emerald-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 pt-1">
+                        <div>
+                            <label class="text-xxs text-gray-500 block mb-0.5">Near Clip Plane</label>
+                            <input type="number" id="nearClip" value="1.0" step="0.1" min="0.1" class="w-full bg-gray-800 text-xs text-center rounded p-1 border border-gray-700 font-mono">
+                        </div>
+                        <div>
+                            <label class="text-xxs text-gray-500 block mb-0.5">Far Clip Plane</label>
+                            <input type="number" id="farClip" value="20.0" step="1" min="2.0" class="w-full bg-gray-800 text-xs text-center rounded p-1 border border-gray-700 font-mono">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-gray-800">
+
+            <div class="space-y-3 flex-1">
+                <h3 class="text-xs font-bold text-yellow-500 uppercase tracking-wider">📝 Live Matrix Conversion Steps</h3>
+                <div id="math-output" class="text-xs space-y-3 text-gray-300 leading-relaxed max-w-full overflow-x-auto"></div>
+            </div>
+        </section>
+
+        <section class="lg:col-span-7 flex flex-col bg-gray-950 p-4 rounded-xl border border-gray-800 shadow-xl h-full justify-between">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wide">📐 Global Scene Viewport (Camera Rig Representation)</h2>
+                <button id="resetSceneCam" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1 rounded border border-gray-700 transition">Reset View</button>
+            </div>
+            
+            <div id="canvas-container" class="w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-800 relative shadow-inner flex-1" style="min-height: 500px;"></div>
+            
+            <div class="pt-3 text-xxs text-gray-500 flex flex-col gap-1 border-t border-gray-900 mt-2">
+                <p>• Red Sphere = Camera target focus point ($T$). | Cyan Line frustum = Perspective Camera boundaries map layout.</p>
+                <p>• Viewport navigation: Hold Left-Click + Drag inside canvas space to orbit around the global supervisor workspace.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const inputs = ['camX', 'camY', 'camZ', 'tarX', 'tarY', 'tarZ', 'upAngle', 'fov', 'aspect', 'nearClip', 'farClip'];
+        let elements = {};
+
+        let scene, camera, renderer, globalControls;
+        let cameraRepresentation, targetMarker, frustumWireframe;
+
+        // Spherical controls tracking state vectors for global viewport tracking
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let sTheta = 0.5, sPhi = 1.1, sRadius = 25;
+
+        window.onload = function() {
+            inputs.forEach(id => {
+                elements[id] = document.getElementById(id);
+                if (document.getElementById(id + 'Val')) {
+                    elements[id + 'Val'] = document.getElementById(id + 'Val');
+                }
+            });
+
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0f172a);
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            updateGlobalCamera();
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            // Integrated robust trackball controller logic
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                let deltaX = e.clientX - previousMousePosition.x;
+                let deltaY = e.clientY - previousMousePosition.y;
+                sTheta -= deltaX * 0.007;
+                sPhi -= deltaY * 0.007;
+                sPhi = Math.max(0.1, Math.min(Math.PI - 0.1, sPhi));
+                updateGlobalCamera();
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            document.addEventListener('mouseup', () => { isDragging = false; });
+
+            document.getElementById('resetSceneCam').addEventListener('click', () => {
+                sTheta = 0.5; sPhi = 1.1; sRadius = 25;
+                updateGlobalCamera();
+            });
+
+            // Grid and coordinate matrices lines
+            const gridHelper = new THREE.GridHelper(30, 30, 0x475569, 0x334155);
+            gridHelper.position.y = -2;
+            scene.add(gridHelper);
+
+            const axesHelper = new THREE.AxesHelper(8);
+            axesHelper.position.y = -1.99;
+            scene.add(axesHelper);
+
+            // Object markers inside scene
+            const targetGeom = new THREE.SphereGeometry(0.2, 16, 16);
+            const targetMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+            targetMarker = new THREE.Mesh(targetGeom, targetMat);
+            scene.add(targetMarker);
+
+            // Mock camera mesh layout shape representation
+            const camBoxGeom = new THREE.BoxGeometry(0.6, 0.4, 0.8);
+            const camBoxMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true });
+            cameraRepresentation = new THREE.Mesh(camBoxGeom, camBoxMat);
+            scene.add(cameraRepresentation);
+
+            // Add standard ground object shapes to give spatial context perspective
+            const demoObjGeom = new THREE.ConeGeometry(0.8, 2, 4);
+            const demoObjMat = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true });
+            const demoObj = new THREE.Mesh(demoObjGeom, demoObjMat);
+            demoObj.position.set(0, -1, 0);
+            scene.add(demoObj);
+
+            // Bind update execution maps directly across tracking array elements
+            inputs.forEach(id => elements[id].oninput = computeAndRender);
+
+            window.onresize = function() {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            };
+
+            computeAndRender();
+            animate();
+        };
+
+        function updateGlobalCamera() {
+            camera.position.x = sRadius * Math.sin(sPhi) * Math.sin(sTheta);
+            camera.position.y = sRadius * Math.cos(sPhi) + 2;
+            camera.position.z = sRadius * Math.sin(sPhi) * Math.cos(sTheta);
+            camera.lookAt(0, 0, 0);
+        }
+
+        function computeAndRender() {
+            if (!elements['camX']) return;
+
+            // Extract numeric slider tracking values from input nodes safely
+            const Ex = parseFloat(elements.camX.value) || 0;
+            const Ey = parseFloat(elements.camY.value) || 0;
+            const Ez = parseFloat(elements.camZ.value) || 0;
+
+            const Tx = parseFloat(elements.tarX.value) || 0;
+            const Ty = parseFloat(elements.tarY.value) || 0;
+            const Tz = parseFloat(elements.tarZ.value) || 0;
+
+            const degAngle = parseFloat(elements.upAngle.value);
+            const degFov = parseFloat(elements.fov.value);
+            const aspect = parseFloat(elements.aspect.value);
+            const near = parseFloat(elements.nearClip.value) || 0.1;
+            const far = parseFloat(elements.farClip.value) || 10;
+
+            // Render slider output indicator strings
+            elements.upAngleVal.innerText = degAngle + "°";
+            elements.fovVal.innerText = degFov + "°";
+            elements.aspectVal.innerText = aspect.toFixed(2);
+
+            // Update spatial model marker node translations
+            targetMarker.position.set(Tx, Ty, Tz);
+            cameraRepresentation.position.set(Ex, Ey, Ez);
+            cameraRepresentation.lookAt(Tx, Ty, Tz);
+
+            // Matrix View Vector Generations Engine calculations
+            // Look direction Vector n = Eye - Target
+            const n_raw = { x: Ex - Tx, y: Ey - Ty, z: Ez - Tz };
+            const n_len = Math.sqrt(n_raw.x**2 + n_raw.y**2 + n_raw.z**2) || 1;
+            const n = { x: n_raw.x / n_len, y: n_raw.y / n_len, z: n_raw.z / n_len };
+
+            // Compute standard angled Up-Vector parameters
+            const radAngle = (degAngle * Math.PI) / 180;
+            const upBase = { 
+                x: -Math.sin(radAngle) * n.y, 
+                y: Math.cos(radAngle), 
+                z: Math.sin(radAngle) * n.x 
+            };
+
+            // Cross Product u = Up x n
+            const u_raw = {
+                x: upBase.y * n.z - upBase.z * n.y,
+                y: upBase.z * n.x - upBase.x * n.z,
+                z: upBase.x * n.y - upBase.y * n.x
+            };
+            const u_len = Math.sqrt(u_raw.x**2 + u_raw.y**2 + u_raw.z**2) || 1;
+            const u = { x: u_raw.x / u_len, y: u_raw.y / u_len, z: u_raw.z / u_len };
+
+            // Cross Product v = n x u
+            const v = {
+                x: n.y * u.z - n.z * u.y,
+                y: n.z * u.x - n.x * u.z,
+                z: n.x * u.y - n.y * u.x
+            };
+
+            // View matrix Dot Translations scalars
+            const tx = -(u.x * Ex + u.y * Ey + u.z * Ez);
+            const ty = -(v.x * Ex + v.y * Ey + v.z * Ez);
+            const tz = -(n.x * Ex + n.y * Ey + n.z * Ez);
+
+            // Perspective Projection Matrix computation data parameters
+            const f = 1.0 / Math.tan((degFov * Math.PI) / 360);
+            const rangeInv = 1.0 / (near - far);
+
+            const p11 = f / aspect;
+            const p22 = f;
+            const p33 = (far + near) * rangeInv;
+            const p34 = (2 * far * near) * rangeInv;
+
+            // Generate dynamic interactive camera wireframe frustum lines display inside global viewport view space
+            if (frustumWireframe) scene.remove(frustumWireframe);
+            const mockCam = new THREE.PerspectiveCamera(degFov, aspect, near, far);
+            mockCam.position.set(Ex, Ey, Ez);
+            mockCam.lookAt(Tx, Ty, Tz);
+            mockCam.up.set(upBase.x, upBase.y, upBase.z);
+            mockCam.updateProjectionMatrix();
+
+            frustumWireframe = new THREE.CameraHelper(mockCam);
+            scene.add(frustumWireframe);
+
+            // Render Output KaTeX Trace Panel Layouts
+            const mathContainer = document.getElementById('math-output');
+            mathContainer.innerHTML = '';
+
+            const sections = [
+                `<div class="bg-gray-900 p-3 rounded border border-gray-800">
+                    <span class="font-bold text-blue-400 block mb-1">Langkah 1: Hitung Vektor Basis Kamera (View Space)</span>
+                    Vektor Arah $\\vec{n}$ (Look-Direction):<br>
+                    $$\\vec{n}_{raw} = E - T = (${Ex - Tx}, ${Ey - Ty}, ${Ez - Tz}) \\rightarrow \\vec{n} = (${n.x.toFixed(3)}, ${n.y.toFixed(3)}, ${n.z.toFixed(3)})$$<br>
+                    Vektor Sisi $\\vec{u}$ (Right Vector = $\\vec{Up}_{base} \\times \\vec{n}$):<br>
+                    $$\\vec{u} = (${u.x.toFixed(3)}, ${u.y.toFixed(3)}, ${u.z.toFixed(3)})$$<br>
+                    Vektor Tegak Lurus $\\vec{v}$ (True Up Vector = $\\vec{n} \\times \\vec{u}$):<br>
+                    $$\\vec{v} = (${v.x.toFixed(3)}, ${v.v || v.y.toFixed(3)}, ${v.z.toFixed(3)})$$
+                </div>`,
+
+                `<div class="bg-gray-900 p-3 rounded border border-gray-800">
+                    <span class="font-bold text-purple-400 block mb-1">Langkah 2: Susun Matriks Konversi Pandangan (View Matrix)</span>
+                    $$M_{view} = \\begin{bmatrix} u_x & u_y & u_z & d_x \\\\ v_x & v_y & v_z & d_y \\\\ n_x & n_y & n_z & d_z \\\\ 0 & 0 & 0 & 1 \\end{bmatrix}$$
+                    $$\\begin{bmatrix} 
+                    ${u.x.toFixed(2)} & ${u.y.toFixed(2)} & ${u.z.toFixed(2)} & ${tx.toFixed(2)} \\\\ 
+                    ${v.x.toFixed(2)} & ${v.y.toFixed(2)} & ${v.z.toFixed(2)} & ${ty.toFixed(2)} \\\\ 
+                    ${n.x.toFixed(2)} & ${n.y.toFixed(2)} & ${n.z.toFixed(2)} & ${tz.toFixed(2)} \\\\ 
+                    0.00 & 0.00 & 0.00 & 1.00 
+                    \end{bmatrix}$$
+                </div>`,
+
+                `<div class="bg-gray-900 p-3 rounded border border-gray-800">
+                    <span class="font-bold text-emerald-400 block mb-1">Langkah 3: Susun Matriks Proyeksi Perspektif (Projection Matrix)</span>
+                    Faktor Skala Fokus $f = \\cot(\\frac{FOV}{2}) = ${f.toFixed(4)}$
+                    $$M_{proj} = \\begin{bmatrix} \\frac{f}{aspect} & 0 & 0 & 0 \\\\ 0 & f & 0 & 0 \\\\ 0 & 0 & \\frac{F+N}{N-F} & \\frac{2FN}{N-F} \\\\ 0 & 0 & -1 & 0 \\end{bmatrix}$$
+                    $$\\begin{bmatrix} 
+                    ${p11.toFixed(2)} & 0.00 & 0.00 & 0.00 \\\\ 
+                    0.00 & ${p22.toFixed(2)} & 0.00 & 0.00 \\\\ 
+                    0.00 & 0.00 & ${p33.toFixed(2)} & ${p34.toFixed(2)} \\\\ 
+                    0.00 & 0.00 & -1.00 & 0.00 
+                    \\end{bmatrix}$$
+                </div>`
+            ];
+
+            sections.forEach(htmlContent => {
+                const block = document.createElement('div');
+                block.innerHTML = htmlContent;
+                mathContainer.appendChild(block);
+            });
+
+            if (window.renderMathInElement) {
+                window.renderMathInElement(mathContainer, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (renderer && scene && camera) renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
