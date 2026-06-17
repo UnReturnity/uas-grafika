@@ -6,14 +6,14 @@
     <title>UAS Grafika Komputer - Lambertian Diffuse Reflection</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="initMathDrawing();"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
 
-    <header class="border-b border-gray-800 bg-gray-950 p-4 sticky top-0 z-50 shadow-md bg-opacity-95 backdrop-filter backdrop-blur">
+    <header class="border-b border-gray-800 bg-gray-950 p-4 sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
                 <h1 class="text-xl font-bold tracking-wider text-purple-400 uppercase">Interactive Visualizer: Lambertian Diffuse</h1>
@@ -24,7 +24,7 @@
                     <span class="block font-semibold text-gray-200">Date:</span> June 17, 2026
                 </div>
                 <div>
-                    <span class="block font-semibold text-gray-200">Frameworks:</span> Three.js, KaTeX, Tailwind
+                    <span class="block font-semibold text-gray-200">System Engine:</span> Three.js Klasik Math
                 </div>
             </div>
         </div>
@@ -36,24 +36,24 @@
             <h2 class="text-md font-bold text-gray-200 tracking-wide border-b border-gray-800 pb-2 uppercase">🎛️ Control Parameters</h2>
             
             <div class="space-y-4">
-                <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Virtual Light Position ($P_L$)</h3>
+                <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Virtual Light Position (P_L)</h3>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
-                        <label for="lightX">Coordinate X Lampu</label>
+                        <label>Coordinate X Lampu</label>
                         <span id="lightXVal" class="text-purple-300 font-mono">0.2</span>
                     </div>
                     <input type="range" id="lightX" min="-10" max="15" step="0.1" value="0.2" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-purple-500">
                 </div>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
-                        <label for="lightY">Coordinate Y Lampu</label>
+                        <label>Coordinate Y Lampu</label>
                         <span id="lightYVal" class="text-purple-300 font-mono">3.0</span>
                     </div>
                     <input type="range" id="lightY" min="-10" max="15" step="0.1" value="3.0" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-purple-500">
                 </div>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
-                        <label for="lightZ">Coordinate Z Lampu</label>
+                        <label>Coordinate Z Lampu</label>
                         <span id="lightZVal" class="text-purple-300 font-mono">2.5</span>
                     </div>
                     <input type="range" id="lightZ" min="-10" max="15" step="0.1" value="2.5" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-purple-500">
@@ -63,24 +63,24 @@
             <hr class="border-gray-800">
 
             <div class="space-y-4">
-                <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Material Color Diffuse ($K_d$)</h3>
+                <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Material Color Diffuse (K_d)</h3>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
-                        <label for="kdR">Komponen Merah (Red)</label>
+                        <label>Komponen Merah (Red)</label>
                         <span id="kdRVal" class="text-emerald-300 font-mono">0.80</span>
                     </div>
                     <input type="range" id="kdR" min="0" max="1" step="0.05" value="0.80" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-emerald-500">
                 </div>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
-                        <label for="kdG">Komponen Hijau (Green)</label>
+                        <label>Komponen Hijau (Green)</label>
                         <span id="kdGVal" class="text-emerald-300 font-mono">0.50</span>
                     </div>
                     <input type="range" id="kdG" min="0" max="1" step="0.05" value="0.50" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-emerald-500">
                 </div>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
-                        <label for="kdB">Komponen Biru (Blue)</label>
+                        <label>Komponen Biru (Blue)</label>
                         <span id="kdBVal" class="text-emerald-300 font-mono">0.30</span>
                     </div>
                     <input type="range" id="kdB" min="0" max="1" step="0.05" value="0.30" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-emerald-500">
@@ -89,30 +89,29 @@
 
             <div class="pt-2 bg-gray-900 p-3 rounded-lg border border-gray-800 text-xs text-gray-400 space-y-1">
                 <span class="font-bold text-gray-200 block mb-1">💡 Viewport Interaction:</span>
-                <p>• Left Click + Drag to rotate canvas.</p>
-                <p>• Right Click + Drag to pan camera viewport.</p>
-                <p>• Scroll wheel to zoom in/out.</p>
+                <p>• Left Click + Drag to rotate workspace scene.</p>
+                <p>• Scroll Wheel to zoom in/out.</p>
             </div>
         </section>
 
         <section class="lg:col-span-8 flex flex-col gap-6">
-            <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 shadow-xl relative">
+            <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 shadow-xl">
                 <div class="flex justify-between items-center mb-2">
                     <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wide">📐 3D Triangular Surface Space</h2>
-                    <button id="resetCam" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1 rounded transition border border-gray-700">Reset Viewport</button>
+                    <button id="resetCam" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1 rounded border border-gray-700 transition">Reset Viewport</button>
                 </div>
-                <div id="canvas-container" class="w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-800 relative" style="height: 400px; min-height: 400px;"></div>
+                <div id="canvas-container" class="w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-800" style="height: 400px; min-height: 400px;"></div>
             </div>
 
             <div class="bg-gray-950 p-5 rounded-xl border border-gray-800 shadow-xl space-y-4">
                 <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wide border-b border-gray-800 pb-2">📝 Complete Manual Mathematical Steps (Classic Computation)</h2>
-                <div id="math-output" class="text-sm space-y-4 text-gray-300 leading-relaxed max-w-full overflow-x-auto">
-                    </div>
+                <div id="math-output" class="text-sm space-y-4 text-gray-300 leading-relaxed max-w-full overflow-x-auto"></div>
             </div>
         </section>
     </main>
 
     <script>
+        // Structural geometry position data vectors
         const A = {x: 8, y: 0, z: 0};
         const C = {x: 0, y: 3, z: 0};
         const E = {x: 4, y: 4, z: 8};
@@ -129,12 +128,15 @@
         let scene, camera, renderer, controls, triangleMesh, wireframe, lightSphere, targetMarker;
         let normalArrow, lightArrow;
 
-        function initMathDrawing() {
+        // Force launch immediately when DOM structure hits the operational window
+        document.addEventListener("DOMContentLoaded", () => {
+            // Bind DOM tracking array nodes
             inputs.forEach(id => {
                 elements[id] = document.getElementById(id);
                 elements[id + 'Val'] = document.getElementById(id + 'Val');
             });
 
+            // Initialize Graphics Engine Pipeline Container Workspace
             const container = document.getElementById('canvas-container');
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x0f172a);
@@ -147,7 +149,202 @@
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             
             function setInitialCamera() {
-                camera.position.set(15, 12, 18);
+                camera.position.set(16, 14, 18);
                 controls.target.set(4, 2, 3);
                 controls.update();
             }
+            setInitialCamera();
+            document.getElementById('resetCam').addEventListener('click', setInitialCamera);
+
+            // Add standard scene helper matrices
+            const gridHelper = new THREE.GridHelper(30, 30, 0x475569, 0x334155);
+            gridHelper.position.y = -0.01;
+            scene.add(gridHelper);
+
+            const axesHelper = new THREE.AxesHelper(10);
+            scene.add(axesHelper);
+
+            // Build geometric plane face matrix arrays
+            const geometry = new THREE.BufferGeometry();
+            const vertices = new Float32Array([
+                A.x, A.y, A.z,
+                C.x, C.y, C.z,
+                E.x, E.y, E.z
+            ]);
+            geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+            geometry.computeVertexNormals();
+
+            const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide });
+            triangleMesh = new THREE.Mesh(geometry, material);
+            scene.add(triangleMesh);
+
+            const wireframeGeom = new THREE.EdgesGeometry(geometry);
+            const wireframeMat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 });
+            wireframe = new THREE.LineSegments(wireframeGeom, wireframeMat);
+            scene.add(wireframe);
+
+            // Add light source spatial mesh tracker sphere
+            const lightSphereGeom = new THREE.SphereGeometry(0.3, 16, 16);
+            const lightSphereMat = new THREE.MeshBasicMaterial({ color: 0xfacc15 });
+            lightSphere = new THREE.Mesh(lightSphereGeom, lightSphereMat);
+            scene.add(lightSphere);
+
+            // Add target surface centroid location marker
+            const targetGeom = new THREE.SphereGeometry(0.15, 16, 16);
+            const targetMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+            targetMarker = new THREE.Mesh(targetGeom, targetMat);
+            targetMarker.position.set(P.x, P.y, P.z);
+            scene.add(targetMarker);
+
+            // Add event action item bindings directly to slider change loops
+            inputs.forEach(id => {
+                elements[id].addEventListener('input', () => {
+                    computeAndRender();
+                });
+            });
+
+            // Handle frame canvas resizing arrays
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            // Core run executions
+            computeAndRender();
+            animate();
+        });
+
+        // Classic Math Computation Calculation Engine
+        function computeAndRender() {
+            if (!elements['lightX']) return;
+
+            // Extract tracking parameters from slider input fields
+            const Lx = parseFloat(elements.lightX.value);
+            const Ly = parseFloat(elements.lightY.value);
+            const Lz = parseFloat(elements.lightZ.value);
+            const kdR = parseFloat(elements.kdR.value);
+            const kdG = parseFloat(elements.kdG.value);
+            const kdB = parseFloat(elements.kdB.value);
+
+            // Write outputs to UI panel label texts
+            elements.lightXVal.innerText = Lx.toFixed(1);
+            elements.lightYVal.innerText = Ly.toFixed(1);
+            elements.lightZVal.innerText = Lz.toFixed(1);
+            elements.kdRVal.innerText = kdR.toFixed(2);
+            elements.kdGVal.innerText = kdG.toFixed(2);
+            elements.kdBVal.innerText = kdB.toFixed(2);
+
+            // Shift real-time light location vector spheres
+            lightSphere.position.set(Lx, Ly, Lz);
+
+            // Compute standard cartesian matrix changes
+            const V1 = { x: C.x - A.x, y: C.y - A.y, z: C.z - A.z };
+            const V2 = { x: E.x - A.x, y: E.y - A.y, z: E.z - A.z };
+
+            // Cross Product generation formulas
+            const N_raw = {
+                x: V1.y * V2.z - V1.z * V2.y,
+                y: V1.z * V2.x - V1.x * V2.z,
+                z: V1.x * V2.y - V1.y * V2.x
+            };
+            const N_len = Math.sqrt(N_raw.x**2 + N_raw.y**2 + N_raw.z**2);
+            const N = { x: N_raw.x / N_len, y: N_raw.y / N_len, z: N_raw.z / N_len };
+
+            // Compute distance direction vectors from centroid point P to Light source Location
+            const L_raw = { x: Lx - P.x, y: Ly - P.y, z: Lz - P.z };
+            const L_len = Math.sqrt(L_raw.x**2 + L_raw.y**2 + L_raw.z**2);
+            const L = { x: L_raw.x / L_len, y: L_raw.y / L_len, z: L_raw.z / L_len };
+
+            // Core dot product formulas (N dot L)
+            const dotNL = N.x * L.x + N.y * L.y + N.z * L.z;
+            const cosTheta = Math.max(0, dotNL);
+
+            // Direct scalar product intensity calculations
+            const colorR = kdR * cosTheta;
+            const colorG = kdG * cosTheta;
+            const colorB = kdB * cosTheta;
+
+            // Force dynamic frame update values into face rendering meshes
+            triangleMesh.material.color.setRGB(colorR, colorG, colorB);
+
+            // Refresh vector display tracking arrows inside the 3D grid layout
+            if (normalArrow) scene.remove(normalArrow);
+            if (lightArrow) scene.remove(lightArrow);
+
+            const originVec = new THREE.Vector3(P.x, P.y, P.z);
+            const dirN = new THREE.Vector3(N.x, N.y, N.z);
+            const dirL = new THREE.Vector3(L.x, L.y, L.z);
+
+            normalArrow = new THREE.ArrowHelper(dirN, originVec, 3.5, 0x3b82f6, 0.6, 0.25);
+            lightArrow = new THREE.ArrowHelper(dirL, originVec, 3.5, 0xfacc15, 0.6, 0.25);
+            scene.add(normalArrow);
+            scene.add(lightArrow);
+
+            // Build dynamic text structures
+            const mathContainer = document.getElementById('math-output');
+            mathContainer.innerHTML = '';
+
+            const sections = [
+                `<strong>Langkah 1: Tentukan Titik Target Penembakan Cahaya ($P$)</strong><br>
+                Gunakan rata-rata koordinat (Centroid) dari permukaan segitiga $ACE$:
+                $$P = \\left(\\frac{A_x+C_x+E_x}{3}, \\frac{A_y+C_y+E_y}{3}, \\frac{A_z+C_z+E_z}{3}\\right)$$
+                $$P = \\left(\\frac{8+0+4}{3}, \\frac{0+3+4}{3}, \\frac{0+0+8}{3}\\right) = (${P.x}, ${P.y}, ${P.z})$$`,
+
+                `<strong>Langkah 2: Hitung Vektor Normal Permukaan Segitiga ($\\vec{N}$)</strong><br>
+                Bentuk dua vektor arah dari titik sudut bidang segitiga:<br>
+                $\\vec{AC} = C - A = (${V1.x}, ${V1.y}, ${V1.z})$<br>
+                $\\vec{AE} = E - A = (${V2.x}, ${V2.y}, ${V2.z})$<br><br>
+                Lakukan Cross Product ($\\vec{AC} \\times \\vec{AE}$):
+                $$\\vec{N}_{raw} = \\det \\begin{bmatrix} \\hat{i} & \\hat{j} & \\hat{k} \\\\ ${V1.x} & ${V1.y} & ${V1.z} \\\\ ${V2.x} & ${V2.y} & ${V2.z} \\end{bmatrix} = (${N_raw.x}, ${N_raw.y}, ${N_raw.z})$$
+                Normalisasikan vektor menjadi unit vektor penunjuk arah:
+                $$|\\vec{N}_{raw}| = \\sqrt{${N_raw.x}^2 + ${N_raw.y}^2 + (${N_raw.z})^2} = ${N_len.toFixed(4)}$$
+                $$\\vec{N} = (${N.x.toFixed(4)}, ${N.y.toFixed(4)}, ${N.z.toFixed(4)})$$`,
+
+                `<strong>Langkah 3: Tentukan Vektor Arah Cahaya ($\\vec{L}$) Ke Lampu</strong><br>
+                Hitung koordinat translasi arah dari titik target $P$ menuju posisi dinamis lampu $P_L$:
+                $$\\vec{L}_{raw} = P_L - P = (${L_raw.x.toFixed(3)}, ${L_raw.y.toFixed(3)}, ${L_raw.z.toFixed(3)})$$
+                Normalisasikan unit vektor arah sebaran berkas cahaya:
+                $$|\\vec{L}_{raw}| = ${L_len.toFixed(4)} \\rightarrow \\vec{L} = (${L.x.toFixed(4)}, ${L.y.toFixed(4)}, ${L.z.toFixed(4)})$$`,
+
+                `<strong>Langkah 4: Hitung Perkalian Titik / Dot Product ($\\vec{N} \\cdot \\vec{L}$)</strong><br>
+                $$\\vec{N} \\cdot \\vec{L} = (${N.x.toFixed(4)} \\cdot ${L.x.toFixed(4)}) + (${N.y.toFixed(4)} \\cdot ${L.y.toFixed(4)}) + (${N.z.toFixed(4)} \\cdot ${L.z.toFixed(4)}) = ${dotNL.toFixed(4)}$$
+                $$\\cos(\\theta) = ${cosTheta.toFixed(4)}$$`,
+
+                `<strong>Langkah 5: Hitung Intensitas Pantulan Cahaya Diffuse Lambertian ($I$)</strong><br>
+                $$I_c = I_L \\cdot K_{dc} \\cdot \\max(0, \\vec{N} \\cdot \\vec{L})$$
+                $$\\begin{aligned}
+                I_{red} &= 1.0 \\cdot ${kdR.toFixed(2)} \\cdot ${cosTheta.toFixed(4)} = \\mathbf{${colorR.toFixed(4)}} \\\\
+                I_{green} &= 1.0 \\cdot ${kdG.toFixed(2)} \\cdot ${cosTheta.toFixed(4)} = \\mathbf{${colorG.toFixed(4)}} \\\\
+                I_{blue} &= 1.0 \\cdot ${kdB.toFixed(2)} \\cdot ${cosTheta.toFixed(4)} = \\mathbf{${colorB.toFixed(4)}}
+                \\end{aligned}$$
+                Warna akhir permukaan: <span class="px-2 py-0.5 rounded text-xs font-mono border" style="background-color: rgb(${Math.round(colorR*255)}, ${Math.round(colorG*255)}, ${Math.round(colorB*255)}); color: ${cosTheta > 0.5 ? '#000' : '#fff'}">RGB(${Math.round(colorR*255)}, ${Math.round(colorG*255)}, ${Math.round(colorB*255)})</span>`
+            ];
+
+            sections.forEach(htmlContent => {
+                const block = document.createElement('div');
+                block.className = 'bg-gray-900 p-4 rounded-lg border border-gray-800 shadow-sm';
+                block.innerHTML = htmlContent;
+                mathContainer.appendChild(block);
+            });
+
+            // Call KaTeX structural parsing formatting safely down the stream
+            if (window.renderMathInElement) {
+                window.renderMathInElement(mathContainer, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        }
+
+        // Standard rendering loop array passes
+        function animate() {
+            requestAnimationFrame(animate);
+            if (controls) controls.update();
+            if (renderer && scene && camera) renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
