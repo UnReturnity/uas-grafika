@@ -4,29 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UAS Grafika Komputer - Lambertian Diffuse Reflection</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="initMathDrawing();"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <style>
-        .katex-display { margin: 0.5em 0; overflow-x: auto; overflow-y: hidden; }
-    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
 
-    <header class="border-b border-slate-800 bg-slate-950 p-4 sticky top-0 z-50 shadow-md">
+    <header class="border-b border-gray-800 bg-gray-950 p-4 sticky top-0 z-50 shadow-md bg-opacity-95 backdrop-filter backdrop-blur">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
                 <h1 class="text-xl font-bold tracking-wider text-purple-400 uppercase">Interactive Visualizer: Lambertian Diffuse</h1>
-                <p class="text-xs text-slate-400">Course Assignment: Computer Graphics | Face Target: Triangle A(8,0,0), C(0,3,0), E(4,4,8)</p>
+                <p class="text-xs text-gray-400">Course Assignment: Computer Graphics | Face Target: Triangle A(8,0,0), C(0,3,0), E(4,4,8)</p>
             </div>
-            <div class="flex gap-4 text-xs text-right text-slate-400">
+            <div class="flex gap-4 text-xs text-right text-gray-400">
                 <div>
-                    <span class="block font-semibold text-slate-200">Date:</span> June 17, 2026
+                    <span class="block font-semibold text-gray-200">Date:</span> June 17, 2026
                 </div>
                 <div>
-                    <span class="block font-semibold text-slate-200">Frameworks:</span> Three.js, KaTeX, Tailwind
+                    <span class="block font-semibold text-gray-200">Frameworks:</span> Three.js, KaTeX, Tailwind
                 </div>
             </div>
         </div>
@@ -34,8 +32,8 @@
 
     <main class="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <section class="lg:col-span-4 space-y-6 bg-slate-950 p-5 rounded-xl border border-slate-800 shadow-xl h-fit">
-            <h2 class="text-md font-bold text-slate-200 tracking-wide border-b border-slate-800 pb-2 uppercase">🎛️ Control Parameters</h2>
+        <section class="lg:col-span-4 space-y-6 bg-gray-950 p-5 rounded-xl border border-gray-800 shadow-xl h-fit">
+            <h2 class="text-md font-bold text-gray-200 tracking-wide border-b border-gray-800 pb-2 uppercase">🎛️ Control Parameters</h2>
             
             <div class="space-y-4">
                 <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Virtual Light Position ($P_L$)</h3>
@@ -44,25 +42,25 @@
                         <label for="lightX">Coordinate X Lampu</label>
                         <span id="lightXVal" class="text-purple-300 font-mono">0.2</span>
                     </div>
-                    <input type="range" id="lightX" min="-10" max="15" step="0.1" value="0.2" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none accent-purple-500">
+                    <input type="range" id="lightX" min="-10" max="15" step="0.1" value="0.2" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-purple-500">
                 </div>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
                         <label for="lightY">Coordinate Y Lampu</label>
                         <span id="lightYVal" class="text-purple-300 font-mono">3.0</span>
                     </div>
-                    <input type="range" id="lightY" min="-10" max="15" step="0.1" value="3.0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none accent-purple-500">
+                    <input type="range" id="lightY" min="-10" max="15" step="0.1" value="3.0" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-purple-500">
                 </div>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
                         <label for="lightZ">Coordinate Z Lampu</label>
                         <span id="lightZVal" class="text-purple-300 font-mono">2.5</span>
                     </div>
-                    <input type="range" id="lightZ" min="-10" max="15" step="0.1" value="2.5" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none accent-purple-500">
+                    <input type="range" id="lightZ" min="-10" max="15" step="0.1" value="2.5" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-purple-500">
                 </div>
             </div>
 
-            <hr class="border-slate-800">
+            <hr class="border-gray-800">
 
             <div class="space-y-4">
                 <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Material Color Diffuse ($K_d$)</h3>
@@ -71,26 +69,26 @@
                         <label for="kdR">Komponen Merah (Red)</label>
                         <span id="kdRVal" class="text-emerald-300 font-mono">0.80</span>
                     </div>
-                    <input type="range" id="kdR" min="0" max="1" step="0.05" value="0.80" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none accent-emerald-500">
+                    <input type="range" id="kdR" min="0" max="1" step="0.05" value="0.80" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-emerald-500">
                 </div>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
                         <label for="kdG">Komponen Hijau (Green)</label>
                         <span id="kdGVal" class="text-emerald-300 font-mono">0.50</span>
                     </div>
-                    <input type="range" id="kdG" min="0" max="1" step="0.05" value="0.50" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none accent-emerald-500">
+                    <input type="range" id="kdG" min="0" max="1" step="0.05" value="0.50" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-emerald-500">
                 </div>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
                         <label for="kdB">Komponen Biru (Blue)</label>
                         <span id="kdBVal" class="text-emerald-300 font-mono">0.30</span>
                     </div>
-                    <input type="range" id="kdB" min="0" max="1" step="0.05" value="0.30" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none accent-emerald-500">
+                    <input type="range" id="kdB" min="0" max="1" step="0.05" value="0.30" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-emerald-500">
                 </div>
             </div>
 
-            <div class="pt-2 bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs text-slate-400 space-y-1">
-                <span class="font-bold text-slate-200 block mb-1">💡 Viewport Interaction:</span>
+            <div class="pt-2 bg-gray-900 p-3 rounded-lg border border-gray-800 text-xs text-gray-400 space-y-1">
+                <span class="font-bold text-gray-200 block mb-1">💡 Viewport Interaction:</span>
                 <p>• Left Click + Drag to rotate canvas.</p>
                 <p>• Right Click + Drag to pan camera viewport.</p>
                 <p>• Scroll wheel to zoom in/out.</p>
@@ -98,152 +96,58 @@
         </section>
 
         <section class="lg:col-span-8 flex flex-col gap-6">
-            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 shadow-xl relative">
+            <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 shadow-xl relative">
                 <div class="flex justify-between items-center mb-2">
-                    <h2 class="text-sm font-bold text-slate-200 uppercase tracking-wide">📐 3D Triangular Surface Space</h2>
-                    <button id="resetCam" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1 rounded transition border border-slate-700">Reset Viewport</button>
+                    <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wide">📐 3D Triangular Surface Space</h2>
+                    <button id="resetCam" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1 rounded transition border border-gray-700">Reset Viewport</button>
                 </div>
-                <div id="canvas-container" class="w-full h-96 bg-slate-900 rounded-lg overflow-hidden border border-slate-800 relative"></div>
+                <div id="canvas-container" class="w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-800 relative" style="height: 400px; min-height: 400px;"></div>
             </div>
 
-            <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 shadow-xl space-y-4">
-                <h2 class="text-sm font-bold text-slate-200 uppercase tracking-wide border-b border-slate-800 pb-2">📝 Complete Manual Mathematical Steps (Classic Computation)</h2>
-                <div id="math-output" class="text-sm space-y-4 text-slate-300 leading-relaxed max-w-full overflow-x-auto">
+            <div class="bg-gray-950 p-5 rounded-xl border border-gray-800 shadow-xl space-y-4">
+                <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wide border-b border-gray-800 pb-2">📝 Complete Manual Mathematical Steps (Classic Computation)</h2>
+                <div id="math-output" class="text-sm space-y-4 text-gray-300 leading-relaxed max-w-full overflow-x-auto">
                     </div>
             </div>
         </section>
     </main>
 
     <script>
-        // Set coordinates based on task sheet diagram
         const A = {x: 8, y: 0, z: 0};
         const C = {x: 0, y: 3, z: 0};
         const E = {x: 4, y: 4, z: 8};
 
-        // Surface target point P (Centroid of triangle ACE)
         const P = {
             x: parseFloat(((A.x + C.x + E.x) / 3).toFixed(3)),
             y: parseFloat(((A.y + C.y + E.y) / 3).toFixed(3)),
             z: parseFloat(((A.z + C.z + E.z) / 3).toFixed(3))
         };
 
-        // DOM elements configuration
         const inputs = ['lightX', 'lightY', 'lightZ', 'kdR', 'kdG', 'kdB'];
-        const elements = {};
-        inputs.forEach(id => {
-            elements[id] = document.getElementById(id);
-            elements[id + 'Val'] = document.getElementById(id + 'Val');
-        });
+        let elements = {};
 
-        // Setup Three.js Context
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0f172a);
-
-        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        container.appendChild(renderer.domElement);
-
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        
-        function setInitialCamera() {
-            camera.position.set(15, 12, 18);
-            controls.target.set(4, 2, 3);
-            controls.update();
-        }
-        setInitialCamera();
-        document.getElementById('resetCam').addEventListener('click', setInitialCamera);
-
-        // Grid & Coordinate System Vectors
-        const gridHelper = new THREE.GridHelper(30, 30, 0x475569, 0x334155);
-        gridHelper.position.y = -0.01;
-        scene.add(gridHelper);
-
-        const axesHelper = new THREE.AxesHelper(10);
-        scene.add(axesHelper);
-
-        // Create Triangle Mesh (Face ACE)
-        const geometry = new THREE.BufferGeometry();
-        const vertices = new Float32Array([
-            A.x, A.y, A.z,
-            C.x, C.y, C.z,
-            E.x, E.y, E.z
-        ]);
-        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-        geometry.computeVertexNormals();
-
-        const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, wireframe: false });
-        const triangleMesh = new THREE.Mesh(geometry, material);
-        scene.add(triangleMesh);
-
-        // Add visual wireframe edge borders to highlight prism geometry
-        const wireframeGeom = new THREE.EdgesGeometry(geometry);
-        const wireframeMat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 });
-        const wireframe = new THREE.LineSegments(wireframeGeom, wireframeMat);
-        scene.add(wireframe);
-
-        // Visual Markers (Light Sphere, Vectors, Intersection Target Point)
-        const lightSphereGeom = new THREE.SphereGeometry(0.25, 16, 16);
-        const lightSphereMat = new THREE.MeshBasicMaterial({ color: 0xfacc15 });
-        const lightSphere = new THREE.Mesh(lightSphereGeom, lightSphereMat);
-        scene.add(lightSphere);
-
-        const targetGeom = new THREE.SphereGeometry(0.15, 16, 16);
-        const targetMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
-        const targetMarker = new THREE.Mesh(targetGeom, targetMat);
-        targetMarker.position.set(P.x, P.y, P.z);
-        scene.add(targetMarker);
-
+        let scene, camera, renderer, controls, triangleMesh, wireframe, lightSphere, targetMarker;
         let normalArrow, lightArrow;
 
-        // Computation Pipeline Engine
-        function computeAndRender() {
-            // Read runtime inputs
-            const Lx = parseFloat(elements.lightX.value);
-            const Ly = parseFloat(elements.lightY.value);
-            const Lz = parseFloat(elements.lightZ.value);
-            const kdR = parseFloat(elements.kdR.value);
-            const kdG = parseFloat(elements.kdG.value);
-            const kdB = parseFloat(elements.kdB.value);
+        function initMathDrawing() {
+            inputs.forEach(id => {
+                elements[id] = document.getElementById(id);
+                elements[id + 'Val'] = document.getElementById(id + 'Val');
+            });
 
-            // Update DOM label displays
-            elements.lightXVal.innerText = Lx.toFixed(1);
-            elements.lightYVal.innerText = Ly.toFixed(1);
-            elements.lightZVal.innerText = Lz.toFixed(1);
-            elements.kdRVal.innerText = kdR.toFixed(2);
-            elements.kdGVal.innerText = kdG.toFixed(2);
-            elements.kdBVal.innerText = kdB.toFixed(2);
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0f172a);
 
-            // Update Light Source spatial marker positions
-            lightSphere.position.set(Lx, Ly, Lz);
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
 
-            // Math execution logic (Classic Cartesian Vectors)
-            // Vector V1 = C - A, Vector V2 = E - A
-            const V1 = { x: C.x - A.x, y: C.y - A.y, z: C.z - A.z };
-            const V2 = { x: E.x - A.x, y: E.y - A.y, z: E.z - A.z };
-
-            // Cross Product for surface normal vector derivation (V1 x V2)
-            const N_raw = {
-                x: V1.y * V2.z - V1.z * V2.y,
-                y: V1.z * V2.x - V1.x * V2.z,
-                z: V1.x * V2.y - V1.y * V2.x
-            };
-            const N_len = Math.sqrt(N_raw.x**2 + N_raw.y**2 + N_raw.z**2);
-            const N = { x: N_raw.x / N_len, y: N_raw.y / N_len, z: N_raw.z / N_len };
-
-            // Vector Light direction generation from target coordinate point P -> L
-            const L_raw = { x: Lx - P.x, y: Ly - P.y, z: Lz - P.z };
-            const L_len = Math.sqrt(L_raw.x**2 + L_raw.y**2 + L_raw.z**2);
-            const L = { x: L_raw.x / L_len, y: L_raw.y / L_len, z: L_raw.z / L_len };
-
-            // Dot Product computation (N dot L)
-            const dotNL = N.x * L.x + N.y * L.y + N.z * L.z;
-            const cosTheta = Math.max(0, dotNL);
-
-            // Calculate final Lambertian color outputs
-            const colorR = kdR * cosTheta;
-            const colorG = kdG * cosTheta;
-            const colorB = kdB * cosTheta;
-
-            // Update real-time 3D geometry engine
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            
+            function setInitialCamera() {
+                camera.position.set(15, 12, 18);
+                controls.target.set(4, 2, 3);
+                controls.update();
+            }
