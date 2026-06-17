@@ -9,7 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
 
@@ -17,7 +16,7 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
                 <h1 class="text-xl font-bold tracking-wider text-purple-400 uppercase">Interactive Visualizer: Lambertian Diffuse</h1>
-                <p class="text-xs text-gray-400">Course Assignment: Computer Graphics | Face Target: Triangle A(8,0,0), C(0,3,0), E(4,4,8)</p>
+                <p class="text-xs text-gray-400">Course Assignment: Computer Graphics | Fully Customizable Field Parameters</p>
             </div>
             <div class="flex gap-4 text-xs text-right text-gray-400">
                 <div>
@@ -32,11 +31,44 @@
 
     <main class="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <section class="lg:col-span-4 space-y-6 bg-gray-950 p-5 rounded-xl border border-gray-800 shadow-xl h-fit">
+        <section class="lg:col-span-4 space-y-6 bg-gray-950 p-5 rounded-xl border border-gray-800 shadow-xl h-fit max-h-screen overflow-y-auto">
             <h2 class="text-md font-bold text-gray-200 tracking-wide border-b border-gray-800 pb-2 uppercase">🎛️ Control Parameters</h2>
             
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold text-blue-400 uppercase tracking-wider">📐 Koordinat Vertex Bidang (Segitiga)</h3>
+                
+                <div class="bg-gray-900 p-2 rounded border border-gray-800 space-y-2">
+                    <span class="text-xs font-semibold text-gray-300 block">Vertex A</span>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div><label class="text-xxs block text-gray-500">X</label><input type="number" id="vAx" value="8" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                        <div><label class="text-xxs block text-gray-500">Y</label><input type="number" id="vAy" value="0" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                        <div><label class="text-xxs block text-gray-500">Z</label><input type="number" id="vAz" value="0" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 p-2 rounded border border-gray-800 space-y-2">
+                    <span class="text-xs font-semibold text-gray-300 block">Vertex C</span>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div><label class="text-xxs block text-gray-500">X</label><input type="number" id="vCx" value="0" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                        <div><label class="text-xxs block text-gray-500">Y</label><input type="number" id="vCy" value="3" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                        <div><label class="text-xxs block text-gray-500">Z</label><input type="number" id="vCz" value="0" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 p-2 rounded border border-gray-800 space-y-2">
+                    <span class="text-xs font-semibold text-gray-300 block">Vertex E</span>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div><label class="text-xxs block text-gray-500">X</label><input type="number" id="vEx" value="4" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                        <div><label class="text-xxs block text-gray-500">Y</label><input type="number" id="vEy" value="4" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                        <div><label class="text-xxs block text-gray-500">Z</label><input type="number" id="vEz" value="8" class="w-full bg-gray-800 text-xs rounded p-1 border border-gray-700 text-purple-300 font-mono"></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-gray-800">
+            
             <div class="space-y-4">
-                <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Virtual Light Position (P_L)</h3>
+                <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">💡 Posisi Lampu Virtual (P_L)</h3>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
                         <label>Coordinate X Lampu</label>
@@ -63,7 +95,7 @@
             <hr class="border-gray-800">
 
             <div class="space-y-4">
-                <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Material Color Diffuse (K_d)</h3>
+                <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">🎨 Warna Material Diffuse (K_d)</h3>
                 <div>
                     <div class="flex justify-between text-xs mb-1">
                         <label>Komponen Merah (Red)</label>
@@ -86,12 +118,6 @@
                     <input type="range" id="kdB" min="0" max="1" step="0.05" value="0.30" class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none accent-emerald-500">
                 </div>
             </div>
-
-            <div class="pt-2 bg-gray-900 p-3 rounded-lg border border-gray-800 text-xs text-gray-400 space-y-1">
-                <span class="font-bold text-gray-200 block mb-1">💡 Viewport Interaction:</span>
-                <p>• Left Click + Drag to rotate workspace scene.</p>
-                <p>• Scroll Wheel to zoom in/out.</p>
-            </div>
         </section>
 
         <section class="lg:col-span-8 flex flex-col gap-6">
@@ -100,7 +126,7 @@
                     <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wide">📐 3D Triangular Surface Space</h2>
                     <button id="resetCam" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1 rounded border border-gray-700 transition">Reset Viewport</button>
                 </div>
-                <div id="canvas-container" class="w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-800" style="height: 400px; min-height: 400px;"></div>
+                <div id="canvas-container" class="w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-800 relative shadow-inner" style="height: 400px; min-height: 400px;"></div>
             </div>
 
             <div class="bg-gray-950 p-5 rounded-xl border border-gray-800 shadow-xl space-y-4">
@@ -111,52 +137,59 @@
     </main>
 
     <script>
-        // Structural geometry position data vectors
-        const A = {x: 8, y: 0, z: 0};
-        const C = {x: 0, y: 3, z: 0};
-        const E = {x: 4, y: 4, z: 8};
-
-        const P = {
-            x: parseFloat(((A.x + C.x + E.x) / 3).toFixed(3)),
-            y: parseFloat(((A.y + C.y + E.y) / 3).toFixed(3)),
-            z: parseFloat(((A.z + C.z + E.z) / 3).toFixed(3))
-        };
-
         const inputs = ['lightX', 'lightY', 'lightZ', 'kdR', 'kdG', 'kdB'];
+        const vInputs = ['vAx', 'vAy', 'vAz', 'vCx', 'vCy', 'vCz', 'vEx', 'vEy', 'vEz'];
         let elements = {};
 
-        let scene, camera, renderer, controls, triangleMesh, wireframe, lightSphere, targetMarker;
+        let scene, camera, renderer, triangleMesh, wireframe, lightSphere, targetMarker;
         let normalArrow, lightArrow;
+        
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let theta = 0.7, phi = 1.0, radius = 25;
 
-        // Force launch immediately when DOM structure hits the operational window
-        document.addEventListener("DOMContentLoaded", () => {
-            // Bind DOM tracking array nodes
-            inputs.forEach(id => {
+        window.onload = function() {
+            // Bind all elements
+            inputs.concat(vInputs).forEach(id => {
                 elements[id] = document.getElementById(id);
-                elements[id + 'Val'] = document.getElementById(id + 'Val');
+                if (document.getElementById(id + 'Val')) {
+                    elements[id + 'Val'] = document.getElementById(id + 'Val');
+                }
             });
 
-            // Initialize Graphics Engine Pipeline Container Workspace
             const container = document.getElementById('canvas-container');
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x0f172a);
 
             camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            updateCameraPosition();
+
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
             container.appendChild(renderer.domElement);
 
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            
-            function setInitialCamera() {
-                camera.position.set(16, 14, 18);
-                controls.target.set(4, 2, 3);
-                controls.update();
-            }
-            setInitialCamera();
-            document.getElementById('resetCam').addEventListener('click', setInitialCamera);
+            // Trackball Dragging controls
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                let deltaX = e.clientX - previousMousePosition.x;
+                let deltaY = e.clientY - previousMousePosition.y;
+                theta -= deltaX * 0.007;
+                phi -= deltaY * 0.007;
+                phi = Math.max(0.1, Math.min(Math.PI - 0.1, phi));
+                updateCameraPosition();
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            document.addEventListener('mouseup', () => { isDragging = false; });
 
-            // Add standard scene helper matrices
+            document.getElementById('resetCam').addEventListener('click', () => {
+                theta = 0.7; phi = 1.0; radius = 25;
+                updateCameraPosition();
+            });
+
             const gridHelper = new THREE.GridHelper(30, 30, 0x475569, 0x334155);
             gridHelper.position.y = -0.01;
             scene.add(gridHelper);
@@ -164,13 +197,61 @@
             const axesHelper = new THREE.AxesHelper(10);
             scene.add(axesHelper);
 
-            // Build geometric plane face matrix arrays
+            // Light indicator mesh
+            const lightSphereGeom = new THREE.SphereGeometry(0.3, 16, 16);
+            const lightSphereMat = new THREE.MeshBasicMaterial({ color: 0xfacc15 });
+            lightSphere = new THREE.Mesh(lightSphereGeom, lightSphereMat);
+            scene.add(lightSphere);
+
+            // Centroid marker mesh
+            const targetGeom = new THREE.SphereGeometry(0.15, 16, 16);
+            const targetMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+            targetMarker = new THREE.Mesh(targetGeom, targetMat);
+            scene.add(targetMarker);
+
+            // Bind update events
+            inputs.forEach(id => elements[id].oninput = computeAndRender);
+            vInputs.forEach(id => elements[id].oninput = computeAndRender);
+
+            window.onresize = function() {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            };
+
+            computeAndRender();
+            animate();
+        };
+
+        function updateCameraPosition() {
+            camera.position.x = radius * Math.sin(phi) * Math.sin(theta) + 4;
+            camera.position.y = radius * Math.cos(phi) + 2;
+            camera.position.z = radius * Math.sin(phi) * Math.cos(theta) + 3;
+            camera.lookAt(4, 2, 3);
+        }
+
+        function computeAndRender() {
+            if (!elements['lightX'] || !elements['vAx']) return;
+
+            // Read Triangle Vertices coordinates from text inputs safely
+            const A = { x: parseFloat(elements.vAx.value) || 0, y: parseFloat(elements.vAy.value) || 0, z: parseFloat(elements.vAz.value) || 0 };
+            const C = { x: parseFloat(elements.vCx.value) || 0, y: parseFloat(elements.vCy.value) || 0, z: parseFloat(elements.vCz.value) || 0 };
+            const E = { x: parseFloat(elements.vEx.value) || 0, y: parseFloat(elements.vEy.value) || 0, z: parseFloat(elements.vEz.value) || 0 };
+
+            // Dynamically calculate centroid P based on custom coordinates
+            const P = {
+                x: parseFloat(((A.x + C.x + E.x) / 3).toFixed(3)),
+                y: parseFloat(((A.y + C.y + E.y) / 3).toFixed(3)),
+                z: parseFloat(((A.z + C.z + E.z) / 3).toFixed(3))
+            };
+            targetMarker.position.set(P.x, P.y, P.z);
+
+            // Rebuild Triangle Geometry in Three.js Scene
+            if (triangleMesh) scene.remove(triangleMesh);
+            if (wireframe) scene.remove(wireframe);
+
             const geometry = new THREE.BufferGeometry();
-            const vertices = new Float32Array([
-                A.x, A.y, A.z,
-                C.x, C.y, C.z,
-                E.x, E.y, E.z
-            ]);
+            const vertices = new Float32Array([A.x, A.y, A.z, C.x, C.y, C.z, E.x, E.y, E.z]);
             geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
             geometry.computeVertexNormals();
 
@@ -183,43 +264,7 @@
             wireframe = new THREE.LineSegments(wireframeGeom, wireframeMat);
             scene.add(wireframe);
 
-            // Add light source spatial mesh tracker sphere
-            const lightSphereGeom = new THREE.SphereGeometry(0.3, 16, 16);
-            const lightSphereMat = new THREE.MeshBasicMaterial({ color: 0xfacc15 });
-            lightSphere = new THREE.Mesh(lightSphereGeom, lightSphereMat);
-            scene.add(lightSphere);
-
-            // Add target surface centroid location marker
-            const targetGeom = new THREE.SphereGeometry(0.15, 16, 16);
-            const targetMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
-            targetMarker = new THREE.Mesh(targetGeom, targetMat);
-            targetMarker.position.set(P.x, P.y, P.z);
-            scene.add(targetMarker);
-
-            // Add event action item bindings directly to slider change loops
-            inputs.forEach(id => {
-                elements[id].addEventListener('input', () => {
-                    computeAndRender();
-                });
-            });
-
-            // Handle frame canvas resizing arrays
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-
-            // Core run executions
-            computeAndRender();
-            animate();
-        });
-
-        // Classic Math Computation Calculation Engine
-        function computeAndRender() {
-            if (!elements['lightX']) return;
-
-            // Extract tracking parameters from slider input fields
+            // Read light and color settings
             const Lx = parseFloat(elements.lightX.value);
             const Ly = parseFloat(elements.lightY.value);
             const Lz = parseFloat(elements.lightZ.value);
@@ -227,7 +272,6 @@
             const kdG = parseFloat(elements.kdG.value);
             const kdB = parseFloat(elements.kdB.value);
 
-            // Write outputs to UI panel label texts
             elements.lightXVal.innerText = Lx.toFixed(1);
             elements.lightYVal.innerText = Ly.toFixed(1);
             elements.lightZVal.innerText = Lz.toFixed(1);
@@ -235,76 +279,67 @@
             elements.kdGVal.innerText = kdG.toFixed(2);
             elements.kdBVal.innerText = kdB.toFixed(2);
 
-            // Shift real-time light location vector spheres
             lightSphere.position.set(Lx, Ly, Lz);
 
-            // Compute standard cartesian matrix changes
+            // Structural Vector Math Calculations
             const V1 = { x: C.x - A.x, y: C.y - A.y, z: C.z - A.z };
             const V2 = { x: E.x - A.x, y: E.y - A.y, z: E.z - A.z };
 
-            // Cross Product generation formulas
             const N_raw = {
                 x: V1.y * V2.z - V1.z * V2.y,
                 y: V1.z * V2.x - V1.x * V2.z,
                 z: V1.x * V2.y - V1.y * V2.x
             };
-            const N_len = Math.sqrt(N_raw.x**2 + N_raw.y**2 + N_raw.z**2);
+            const N_len = Math.sqrt(N_raw.x**2 + N_raw.y**2 + N_raw.z**2) || 1;
             const N = { x: N_raw.x / N_len, y: N_raw.y / N_len, z: N_raw.z / N_len };
 
-            // Compute distance direction vectors from centroid point P to Light source Location
             const L_raw = { x: Lx - P.x, y: Ly - P.y, z: Lz - P.z };
-            const L_len = Math.sqrt(L_raw.x**2 + L_raw.y**2 + L_raw.z**2);
+            const L_len = Math.sqrt(L_raw.x**2 + L_raw.y**2 + L_raw.z**2) || 1;
             const L = { x: L_raw.x / L_len, y: L_raw.y / L_len, z: L_raw.z / L_len };
 
-            // Core dot product formulas (N dot L)
             const dotNL = N.x * L.x + N.y * L.y + N.z * L.z;
             const cosTheta = Math.max(0, dotNL);
 
-            // Direct scalar product intensity calculations
             const colorR = kdR * cosTheta;
             const colorG = kdG * cosTheta;
             const colorB = kdB * cosTheta;
 
-            // Force dynamic frame update values into face rendering meshes
             triangleMesh.material.color.setRGB(colorR, colorG, colorB);
 
-            // Refresh vector display tracking arrows inside the 3D grid layout
+            // Draw arrows
             if (normalArrow) scene.remove(normalArrow);
             if (lightArrow) scene.remove(lightArrow);
 
             const originVec = new THREE.Vector3(P.x, P.y, P.z);
-            const dirN = new THREE.Vector3(N.x, N.y, N.z);
-            const dirL = new THREE.Vector3(L.x, L.y, L.z);
-
-            normalArrow = new THREE.ArrowHelper(dirN, originVec, 3.5, 0x3b82f6, 0.6, 0.25);
-            lightArrow = new THREE.ArrowHelper(dirL, originVec, 3.5, 0xfacc15, 0.6, 0.25);
+            normalArrow = new THREE.ArrowHelper(new THREE.Vector3(N.x, N.y, N.z), originVec, 3.5, 0x3b82f6, 0.6, 0.25);
+            lightArrow = new THREE.ArrowHelper(new THREE.Vector3(L.x, L.y, L.z), originVec, 3.5, 0xfacc15, 0.6, 0.25);
             scene.add(normalArrow);
             scene.add(lightArrow);
 
-            // Build dynamic text structures
+            // Render Output Math
             const mathContainer = document.getElementById('math-output');
             mathContainer.innerHTML = '';
 
             const sections = [
                 `<strong>Langkah 1: Tentukan Titik Target Penembakan Cahaya ($P$)</strong><br>
-                Gunakan rata-rata koordinat (Centroid) dari permukaan segitiga $ACE$:
+                Gunakan rata-rata koordinat (Centroid) dari koordinat input segitiga yang dimasukkan ($A, C, E$):
                 $$P = \\left(\\frac{A_x+C_x+E_x}{3}, \\frac{A_y+C_y+E_y}{3}, \\frac{A_z+C_z+E_z}{3}\\right)$$
-                $$P = \\left(\\frac{8+0+4}{3}, \\frac{0+3+4}{3}, \\frac{0+0+8}{3}\\right) = (${P.x}, ${P.y}, ${P.z})$$`,
+                $$P = \\left(\\frac{${A.x}+${C.x}+${E.x}}{3}, \\frac{${A.y}+${C.y}+${E.y}}{3}, \\frac{${A.z}+${C.z}+${E.z}}{3}\\right) = (${P.x}, ${P.y}, ${P.z})$$`,
 
                 `<strong>Langkah 2: Hitung Vektor Normal Permukaan Segitiga ($\\vec{N}$)</strong><br>
-                Bentuk dua vektor arah dari titik sudut bidang segitiga:<br>
+                Bentuk dua arah vektor dasar:<br>
                 $\\vec{AC} = C - A = (${V1.x}, ${V1.y}, ${V1.z})$<br>
                 $\\vec{AE} = E - A = (${V2.x}, ${V2.y}, ${V2.z})$<br><br>
-                Lakukan Cross Product ($\\vec{AC} \\times \\vec{AE}$):
+                Hitung Cross Product ($\\vec{AC} \\times \\vec{AE}$):
                 $$\\vec{N}_{raw} = \\det \\begin{bmatrix} \\hat{i} & \\hat{j} & \\hat{k} \\\\ ${V1.x} & ${V1.y} & ${V1.z} \\\\ ${V2.x} & ${V2.y} & ${V2.z} \\end{bmatrix} = (${N_raw.x}, ${N_raw.y}, ${N_raw.z})$$
-                Normalisasikan vektor menjadi unit vektor penunjuk arah:
-                $$|\\vec{N}_{raw}| = \\sqrt{${N_raw.x}^2 + ${N_raw.y}^2 + (${N_raw.z})^2} = ${N_len.toFixed(4)}$$
+                Normalisasikan panjang untuk mendapatkan unit vektor normal:
+                $$|\\vec{N}_{raw}| = \\sqrt{(${N_raw.x})^2 + (${N_raw.y})^2 + (${N_raw.z})^2} = ${N_len.toFixed(4)}$$
                 $$\\vec{N} = (${N.x.toFixed(4)}, ${N.y.toFixed(4)}, ${N.z.toFixed(4)})$$`,
 
                 `<strong>Langkah 3: Tentukan Vektor Arah Cahaya ($\\vec{L}$) Ke Lampu</strong><br>
-                Hitung koordinat translasi arah dari titik target $P$ menuju posisi dinamis lampu $P_L$:
+                Hitung translasi dari titik pusat $P$ menuju koordinat lampu $P_L$:
                 $$\\vec{L}_{raw} = P_L - P = (${L_raw.x.toFixed(3)}, ${L_raw.y.toFixed(3)}, ${L_raw.z.toFixed(3)})$$
-                Normalisasikan unit vektor arah sebaran berkas cahaya:
+                Normalisasikan menjadi unit vektor arah cahaya:
                 $$|\\vec{L}_{raw}| = ${L_len.toFixed(4)} \\rightarrow \\vec{L} = (${L.x.toFixed(4)}, ${L.y.toFixed(4)}, ${L.z.toFixed(4)})$$`,
 
                 `<strong>Langkah 4: Hitung Perkalian Titik / Dot Product ($\\vec{N} \\cdot \\vec{L}$)</strong><br>
@@ -318,7 +353,7 @@
                 I_{green} &= 1.0 \\cdot ${kdG.toFixed(2)} \\cdot ${cosTheta.toFixed(4)} = \\mathbf{${colorG.toFixed(4)}} \\\\
                 I_{blue} &= 1.0 \\cdot ${kdB.toFixed(2)} \\cdot ${cosTheta.toFixed(4)} = \\mathbf{${colorB.toFixed(4)}}
                 \\end{aligned}$$
-                Warna akhir permukaan: <span class="px-2 py-0.5 rounded text-xs font-mono border" style="background-color: rgb(${Math.round(colorR*255)}, ${Math.round(colorG*255)}, ${Math.round(colorB*255)}); color: ${cosTheta > 0.5 ? '#000' : '#fff'}">RGB(${Math.round(colorR*255)}, ${Math.round(colorG*255)}, ${Math.round(colorB*255)})</span>`
+                Warna Akhir Permukaan: <span class="px-2 py-0.5 rounded text-xs font-mono border" style="background-color: rgb(${Math.round(colorR*255)}, ${Math.round(colorG*255)}, ${Math.round(colorB*255)}); color: ${cosTheta > 0.5 ? '#000' : '#fff'}">RGB(${Math.round(colorR*255)}, ${Math.round(colorG*255)}, ${Math.round(colorB*255)})</span>`
             ];
 
             sections.forEach(htmlContent => {
@@ -328,7 +363,6 @@
                 mathContainer.appendChild(block);
             });
 
-            // Call KaTeX structural parsing formatting safely down the stream
             if (window.renderMathInElement) {
                 window.renderMathInElement(mathContainer, {
                     delimiters: [
@@ -339,10 +373,8 @@
             }
         }
 
-        // Standard rendering loop array passes
         function animate() {
             requestAnimationFrame(animate);
-            if (controls) controls.update();
             if (renderer && scene && camera) renderer.render(scene, camera);
         }
     </script>
